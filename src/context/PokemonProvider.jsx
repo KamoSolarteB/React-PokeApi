@@ -7,6 +7,12 @@ export function PokemonProvider({ children }) {
   const [allPokemons, setAllPokemons] = useState([]);
   const [offset, setOffset] = useState(0);
 
+  // Use of CustomHook - useForm
+
+  // Simple statements for application
+  const [loading, setLoading] = useState(true);
+  const [active, setActive] = useState(false);
+
   // Call for the first 50 pokemons
   const getFirstPokemons = async (limit = 50) => {
     const url = "https://pokeapi.co/api/v2/";
@@ -22,8 +28,8 @@ export function PokemonProvider({ children }) {
       return data;
     });
     const results = await Promise.all(promises);
-    console.log(results);
-    setFirstPokemons(results);
+    setFirstPokemons([...firstPokemons, ...results]);
+    setLoading(false);
   };
 
   // Call all pokemons
@@ -39,8 +45,17 @@ export function PokemonProvider({ children }) {
       return data;
     });
     const results = await Promise.all(promises);
-    console.log(results);
     setAllPokemons(results);
+    setLoading(false);
+  };
+
+  // Call pokemon by id
+  const getPokemonById = async (id) => {
+    const url = "https://pokeapi.co/api/v2/";
+
+    const response = await fetch(`${url}pokemon/${id}`);
+    const data = await response.json();
+    return data;
   };
 
   // First 50
@@ -49,8 +64,8 @@ export function PokemonProvider({ children }) {
   }, []);
   // All
   useEffect(() => {
-    getAllPokemons()
-  }, [])
+    getAllPokemons();
+  }, []);
 
   return (
     <PokemonContext.Provider
