@@ -1,7 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link, Outlet } from "react-router-dom";
+import { PokemonContext } from "../context/PokemonProvider";
 
 function Nav() {
+
+  const {x} = useContext(PokemonContext)
+  console.log(x);
+
   return (
     <>
       <header className="container">
@@ -32,7 +37,7 @@ function Nav() {
           <button className="btn-search">Buscar</button>
         </form>
       </header>
-      
+
       <Outlet/>
     </>
   );

@@ -1,7 +1,8 @@
-import React from 'react'
-import { PokemonContext } from '.'
+import React, { createContext } from 'react'
 
-function PokemonProvider({ children }) {
+export const PokemonContext = createContext()
+
+export function PokemonProvider({ children }) {
   return (
     <PokemonContext.Provider value={{
       x: 10,
