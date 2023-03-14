@@ -10,8 +10,8 @@ export function PokemonProvider({ children }) {
 
   // Use of CustomHook - useForm
   const { valueSearch, onInputChange, onResetForm } = useForm({
-    valueSearch: ''
-  })
+    valueSearch: "",
+  });
 
   // Simple statements for application
   const [loading, setLoading] = useState(true);
@@ -74,7 +74,12 @@ export function PokemonProvider({ children }) {
   return (
     <PokemonContext.Provider
       value={{
-        x: 10,
+        valueSearch,
+        onInputChange,
+        onResetForm,
+        getPokemonById,
+        firstPokemons,
+        allPokemons,
       }}
     >
       {children}
