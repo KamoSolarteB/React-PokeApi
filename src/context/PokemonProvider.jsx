@@ -4,6 +4,7 @@ export const PokemonContext = createContext();
 
 export function PokemonProvider({ children }) {
   const [firstPokemons, setFirstPokemons] = useState([]);
+  const [allPokemons, setAllPokemons] = useState([]);
   const [offset, setOffset] = useState(0);
 
   // Call for the first 50 pokemons
@@ -25,9 +26,31 @@ export function PokemonProvider({ children }) {
     setFirstPokemons(results);
   };
 
+  // Call all pokemons
+  const getAllPokemons = async () => {
+    const url = "https://pokeapi.co/api/v2/";
+
+    const response = await fetch(`${url}pokemon?limit=100000&offset=0`);
+    const data = await response.json();
+
+    const promises = data.results.map(async (pokemon) => {
+      const res = await fetch(pokemon.url);
+      const data = await res.json();
+      return data;
+    });
+    const results = await Promise.all(promises);
+    console.log(results);
+    setAllPokemons(results);
+  };
+
+  // First 50
   useEffect(() => {
     getFirstPokemons();
   }, []);
+  // All
+  useEffect(() => {
+    getAllPokemons()
+  }, [])
 
   return (
     <PokemonContext.Provider
