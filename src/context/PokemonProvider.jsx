@@ -1,4 +1,5 @@
 import React, { createContext, useState, useEffect } from "react";
+import { useForm } from "../Hooks";
 
 export const PokemonContext = createContext();
 
@@ -8,6 +9,9 @@ export function PokemonProvider({ children }) {
   const [offset, setOffset] = useState(0);
 
   // Use of CustomHook - useForm
+  const { valueSearch, onInputChange, onResetForm } = useForm({
+    valueSearch: ''
+  })
 
   // Simple statements for application
   const [loading, setLoading] = useState(true);
