@@ -4,8 +4,7 @@ import { PokemonContext } from "../context/PokemonProvider";
 
 function Nav() {
 
-  const {x} = useContext(PokemonContext)
-  console.log(x);
+  const {} = useContext(PokemonContext)
 
   return (
     <>
